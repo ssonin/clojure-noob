@@ -51,8 +51,8 @@
 (defn my-map
   [func coll]
   (reduce (fn [new-seq coll]
-            (into new-seq (list (func coll))))
-          [] coll))
+            (concat new-seq (list (func coll))))
+          () coll))
 
 (my-map inc [1 2 3])
 
