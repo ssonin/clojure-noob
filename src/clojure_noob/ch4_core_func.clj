@@ -22,3 +22,39 @@
   [numbers]
   (map #(% numbers) [sum count avg]))
 (stats [1 2 3])
+
+;; retrieve a value associated with a keyword
+;; from a collection of maps
+(def identities
+  [{:alias "Batman" :real "Bruce Wayne"}
+   {:alias "Santa" :real "Your mom"}])
+(map :real identities)
+
+; reduce
+
+;; reduce a collection
+(reduce str ["a" "b" "c"])
+
+;; transform map's values
+(reduce (fn [new-map [key val]]
+          (assoc new-map key (inc val)))
+        {} {:max 30 :min 10})
+
+;; filter map's values according to a predicate
+(reduce (fn [new-map [key val]]
+          (if (> val 4)
+            (assoc new-map key val)
+            new-map))
+        {} {:human 8.1, :critter 0.0})
+
+;; simple map implementation via reduce
+(defn my-map
+  [func coll]
+  (reduce (fn [new-seq coll]
+            (into new-seq (list (func coll))))
+          [] coll))
+
+(my-map inc [1 2 3])
+
+
+
