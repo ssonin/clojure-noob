@@ -59,7 +59,7 @@
 
 
 ;; take, drop, take-while, drop-while
-(take 3 (range 10))
+(take 3 (range))
 (drop 5 (range 42))
 
 (take-while #(> (mod % 3) 0) (range 1 20 4))
