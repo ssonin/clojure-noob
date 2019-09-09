@@ -30,6 +30,7 @@
    {:alias "Santa" :real "Your mom"}])
 (map :real identities)
 
+
 ; reduce
 
 ;; reduce a collection
@@ -55,6 +56,16 @@
           () coll))
 
 (my-map inc [1 2 3])
+
+
+;; take, drop, take-while, drop-while
+(take 3 (range 10))
+(drop 5 (range 42))
+
+(take-while #(> (mod % 3) 0) (range 1 20 4))
+(drop-while #(> (mod % 3) 0) (range 1 20 4))
+
+
 
 
 
