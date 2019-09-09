@@ -75,5 +75,40 @@
 (sort-by count ["111" "22" "3"])
 
 
+;; Lazy Seq efficiency
+(def vampire-database
+  {0 {:makes-blood-puns? false, :has-pulse? true :name "McFishwich"}
+   1 {:makes-blood-puns? false, :has-pulse? true :name "McMackson"}
+   2 {:makes-blood-puns? true, :has-pulse? false :name "Damon Salvatore"}
+   3 {:makes-blood-puns? true, :has-pulse? true :name "Mickey Mouse"}})
+
+(defn vampire-related-details
+  [ssn]
+  (Thread/sleep 1000)
+  (get vampire-database ssn))
+
+(defn vampire?
+  [record]
+  (and (:makes-blood-puns? record)
+       (not (:has-pulse? record))
+       record))
+
+(defn identify-vampire
+  [ssn-list]
+  (first (filter vampire?
+                 (map vampire-related-details ssn-list))))
+
+(time (vampire-related-details 0))                          ; time cost of a single call
+(time (def mapped-details
+        (map vampire-related-details (range 0 1000000))))   ; instant since evaluation is delayed
+(time (first mapped-details))                               ; takes about 32 seconds due to chunking
+(time (first mapped-details))                               ; consequent call takes almost no time
+(time (identify-vampire (range 0 1000000)))
+
+
+
+
+
+
 
 
