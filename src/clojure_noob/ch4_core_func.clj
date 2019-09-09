@@ -66,6 +66,14 @@
 (drop-while #(> (mod % 3) 0) (range 1 20 4))
 
 
+;; filter, some
+(filter #(= (mod % 2) 0) (range 20))
+(some #(and (= (mod % 2) 0) %) (range 20))
+
+
+; sort
+(sort-by count ["111" "22" "3"])
+
 
 
 
