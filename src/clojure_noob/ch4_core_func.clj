@@ -31,6 +31,7 @@
 (map :real identities)
 
 
+
 ; reduce
 
 ;; reduce a collection
@@ -58,7 +59,8 @@
 (my-map inc [1 2 3])
 
 
-;; take, drop, take-while, drop-while
+
+; take, drop, take-while, drop-while
 (take 3 (range))
 (drop 5 (range 42))
 
@@ -66,16 +68,19 @@
 (drop-while #(> (mod % 3) 0) (range 1 20 4))
 
 
-;; filter, some
+
+; filter, some
 (filter #(= (mod % 2) 0) (range 20))
 (some #(and (= (mod % 2) 0) %) (range 20))
+
 
 
 ; sort
 (sort-by count ["111" "22" "3"])
 
 
-;; Lazy Seq efficiency
+
+; Lazy Seq efficiency
 (def vampire-database
   {0 {:makes-blood-puns? false, :has-pulse? true :name "McFishwich"}
    1 {:makes-blood-puns? false, :has-pulse? true :name "McMackson"}
@@ -107,6 +112,14 @@
 
 
 
+; Infinite sequences
+(concat ["nah"] (take 5 (repeat "fukunah")))
+(take 3 (repeatedly #(rand-int 10)))
+(defn even-numbers
+  ([] (even-numbers 0))
+  ([n] (cons n (lazy-seq (even-numbers (+ n 2))))))
+
+(take 20 (even-numbers))
 
 
 
