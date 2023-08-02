@@ -1,4 +1,4 @@
-(ns clojure-noob.ch4-core-func)
+(ns ssonin.clojure-noob.ch4-core-func)
 
 ; map
 
@@ -23,11 +23,10 @@
   (map #(% numbers) [sum count avg]))
 (stats [1 2 3])
 
-;; retrieve a value associated with a keyword
-;; from a collection of maps
+;; retrieve a value associated with a keyword from a collection of maps
 (def identities
   [{:alias "Batman" :real "Bruce Wayne"}
-   {:alias "Santa" :real "Your mom"}])
+   {:alias "Santa" :real "Ur mom"}])
 (map :real identities)
 
 
@@ -51,34 +50,52 @@
 
 ;; simple map implementation via reduce
 (defn my-map
-  [func coll]
-  (reduce (fn [new-seq coll]
-            (concat new-seq (list (func coll))))
-          () coll))
-
+  [f coll]
+  (reduce (fn [new-seq element]
+            (concat new-seq (list (f element))))
+          ()
+          coll))
 (my-map inc [1 2 3])
 
+;; simple filter implementation via reduce
+(defn my-filter
+  [pred coll]
+  (reduce (fn [new-seq element]
+            (if (pred element)
+              (concat new-seq (list element))
+              new-seq))
+          ()
+          coll))
+(my-filter #(> % 5) [1 3 7 4 8 -3 18])
 
+;; simple some implementation via reduce
+(defn my-some
+  [pred coll]
+  (reduce (fn [acc element]
+            (or acc (pred element)))
+          nil
+          coll))
+(my-some #(> % 5) '(1 2 3 4))
+(my-some #(> % 5) ())
 
-; take, drop, take-while, drop-while
+;; take, drop, take-while, drop-while
 (take 3 (range))
 (drop 5 (range 42))
 
 (take-while #(> (mod % 3) 0) (range 1 20 4))
 (drop-while #(> (mod % 3) 0) (range 1 20 4))
 
-
-
-; filter, some
+;; filter
 (filter #(= (mod % 2) 0) (range 20))
+
+;; some
 (some #(and (= (mod % 2) 0) %) (range 20))
 
+;; sort
+(sort ["b" "aaa" "bb" "a"])
 
-
-; sort
+;; sort-by
 (sort-by count ["111" "22" "3"])
-
-
 
 ; Lazy Seq efficiency
 (def vampire-database
@@ -122,6 +139,44 @@
 (take 20 (even-numbers))
 
 
+
+; Collection abstraction
+; is about the data structure as a whole
+
+;; into
+(map identity {:sunlight-reaction "Glitter!"})
+(into {} (map identity {:sunlight-reaction "Glitter!"}))
+
+(map identity [:garlic :sesame-oil :fried-eggs])
+(into [] (map identity [:garlic :sesame-oil :fried-eggs]))
+
+;; conj (takes a rest parameter as opposed to into)
+(conj [1 2 3] 4)
+(conj [1 2 3] [4 5])
+(conj [1 2 3] 4 5 6)
+
+;; apply
+(apply max [1 2 3])                                         ;; equivalent to (max 1 2 3)
+(apply conj [1 2 3] [4 5 6])                                ;; equivalent to (conj [1 2 3] 4 5 6)
+
+;; partial
+(defn my-partial
+  [partialised-fn & args]
+  (fn [& more-args]
+    (apply partialised-fn (into args more-args))))
+
+(def add20 (my-partial + 20))
+(add20 3 4 5)
+
+;; complement
+(def my-non-neg? (complement neg?))
+(my-non-neg? 1)
+(my-non-neg? -1)
+
+(defn my-complement
+  [fun]
+  (fn [& args]
+    (not (apply fun args))))
 
 
 

@@ -1,4 +1,4 @@
-(ns clojure-noob.ch3-crash-course)
+(ns ssonin.clojure-noob.ch3-crash-course)
 
 ; control flow
 ;; do
@@ -45,6 +45,7 @@
 ;;; conjoin on vectors happens at the end
 (conj [1 2 3] 4)
 (conj [1 2 3] [4 5])
+(conj [1 2 3] 4 5 6)
 
 ;; lists
 '(1 2 3)

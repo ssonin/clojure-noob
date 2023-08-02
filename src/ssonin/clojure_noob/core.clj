@@ -1,4 +1,4 @@
-(ns clojure-noob.core
+(ns ssonin.clojure-noob.core
   (:gen-class))
 
 (str "Metal " "Up " "Your " "Ass")
