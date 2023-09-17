@@ -62,18 +62,3 @@
 (simulate "RAALAL" (robot {:x 7 :y 3} :north))
 (simulate "R" (robot {:y 0, :x 0} :north))
 (simulate "LAAARRRALLLL" (robot {:y 4, :x 8} :south))
-
-
-(defn reformat
-  "Takes a string representing a log line and formats it
-   with the message first and the log level in parentheses."
-  [s]
-  (let [matched (re-matches #"\[(\w+)\]:(.+)" s)]
-    (clojure.core/str
-      (get matched 2)
-      " ("
-      (str/lower-case (get matched 1))
-      ")")))
-
-(reformat "[ERROR]: Stack overflow")
-(reformat "[ERROR]: \t Corrupt disk\t \t \r\n")
