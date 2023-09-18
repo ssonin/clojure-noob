@@ -13,11 +13,11 @@
   (println "Success!")
   "abra cadabra")
 
-;; or: first truthy or the last
+;; or: the first truthy else last
 (or false nil :large_I_mean_venti :why_cant_I_just_say_large)
 (or false nil (= (* 2 2) 5))
 
-;; and: first falsy or the last
+;; and: the last else the first falsy
 (and (= 0 0) "do" "it" "yourself")
 (and (= 0 0) "do" nil "yourself")
 
