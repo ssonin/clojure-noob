@@ -1,11 +1,10 @@
 (ns ssonin.exercism.lists.sublist)
 
 (defn prefix?
+  "Returns true if list1 is a prefix of list2"
   [list1 list2]
   (or (empty? list1)
-      (and (not (empty? list2))
-           (== (first list1) (first list2))
-           (recur (rest list1) (rest list2)))))
+      (= list1 (take (count list1) list2))))
 
 (prefix? [3 4 5] [0 1 2 3 4 5])
 (prefix? [3 4 5] [3 1 2 3 4 5])
@@ -16,10 +15,12 @@
 (prefix? [3 4 5] [3 4 6])
 
 (defn sublist?
-   [list1 list2]
-   (and (<= (count list1) (count list2))
-        (or (prefix? list1 list2)
-            (recur list1 (rest list2)))))
+  "Returns true if list1 is a sublist of list2"
+  [list1 list2]
+  (let [size1 (count list1)
+        size2 (count list2)]
+    (and (<= size1 size2)
+         (boolean (some #(= list1 %) (partition size1 1 list2))))))
 
 (sublist? [3 4 5] [0 1 2 3 4 5])
 (sublist? [3 4 5] [0 1 2 3 4 6])
@@ -47,5 +48,15 @@
               (recur (rest list1) (rest list2))
               :unequal))))
 
+(defn classify2
+  [list1 list2]
+  (cond
+    (= list1 list2) :equal
+    (sublist? list1 list2) :sublist
+    (sublist? list2 list1) :superlist
+    :else :unequal))
+
 (classify [3 4 5] [0 1 2 3 4 5])
 (classify [1 3] [1 2 3])
+
+(classify2 [1 3] [1 2 3])

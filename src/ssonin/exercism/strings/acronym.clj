@@ -20,14 +20,6 @@
     (apply str
            (flatten (map acronym-symbols (words s))))))
 
-
-
-;(apply str (map acronym-symbols (words "HyperText Markup Language")))
-
 (acronym "HyperText Markup Language")
 (acronym "")
 (map acronym-symbols (words ""))
-
-
-
-(flatten (map acronym-symbols (words "HyperText Markup Language")))
