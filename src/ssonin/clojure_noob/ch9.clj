@@ -40,17 +40,7 @@
 
 
 
-(defn search-on
-  [search-engine]
-  #(slurp (str "https://" search-engine "/search?q=" %)))
-
-(defn search-on-google
-  [s]
-  ((search-on "www.google.com") s))
-
-(defn search-on-bing
-  [s]
-  ((search-on "www.bing.com") s))
+(declare search-on search-on-google search-on-bing)
 
 (defn find-on-bing-or-google
   "Searches for s on Bing and Google and returns the HTML of the first page returned by the search"
@@ -60,6 +50,18 @@
       (future (let [result (search-fn s)]
                 (deliver search-result-promise result))))
     @search-result-promise))
+
+(defn search-on
+  [search-engine s]
+  ((comp slurp str) "https://" search-engine "/search?q=" s))
+
+(defn search-on-google
+  [s]
+  (search-on "www.google.com" s))
+
+(defn search-on-bing
+  [s]
+  (search-on "www.bing.com" s))
 
 (find-on-bing-or-google "chandler")
 
