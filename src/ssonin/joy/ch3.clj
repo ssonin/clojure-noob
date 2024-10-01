@@ -24,10 +24,9 @@
 
 
 (def frame
-  (let [result (Frame.)]
-    (.setVisible result true)
-    (.setSize result (Dimension. 200 200))
-    result))
+  (doto (Frame.)
+    (.setVisible true)
+    (.setSize (Dimension. 200 200))))
 
 (defn f-values [f xs ys]
   (for [x (range xs) y (range ys)]
